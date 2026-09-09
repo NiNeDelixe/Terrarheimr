@@ -1,19 +1,27 @@
 ﻿using BepInEx;
+using EquipmentAndQuickSlotsAPI;
+using HarmonyLib;
 using Jotunn.Configs;
 using Jotunn.Entities;
 using Jotunn.Managers;
 using Jotunn.Utils;
+using Terrarheimr.Features.Effects;
+using Terrarheimr.Features.Items;
+using Terrarheimr.Features.Slots;
 
 namespace Terrarheimr
 {
     [BepInPlugin(PluginGUID, PluginName, PluginVersion)]
     [BepInDependency(Jotunn.Main.ModGuid)]
+    [BepInDependency("randyknapp.mods.equipmentandquickslots", BepInDependency.DependencyFlags.SoftDependency)]
     //[NetworkCompatibility(CompatibilityLevel.EveryoneMustHaveMod, VersionStrictness.Minor)]
     internal class Terrarheimr : BaseUnityPlugin
     {
         public const string PluginGUID = "com.jotunn.jotunnmodstub";
         public const string PluginName = "Terrarheimr";
         public const string PluginVersion = "0.0.1";
+
+        private Harmony _harmony;
 
         // Use this class to add your own localization to the game
         // https://valheim-modding.github.io/Jotunn/tutorials/localization.html
@@ -26,8 +34,17 @@ namespace Terrarheimr
 
             PrefabManager.OnVanillaPrefabsAvailable += AddClonedItems;
 
+            _harmony = new Harmony(PluginName);
+            _harmony.PatchAll();
+
             // To learn more about Jotunn's features, go to
             // https://valheim-modding.github.io/Jotunn/tutorials/overview.html
+
+            AllEffects.Init();
+
+            if (!EAQS.IsLoaded()) return;
+
+            AccessoriesSlots.Init();
         }
         private void AddClonedItems()
         {
@@ -45,8 +62,16 @@ namespace Terrarheimr
             // Show a different KeyHint for the sword.
             //KeyHintsEvilSword();
 
+            AllItems.Init();
+            ItemManager.OnItemsRegistered += OnItemsRegistered;
+
             // You want that to run only once, Jotunn has the item cached for the game session
             PrefabManager.OnVanillaPrefabsAvailable -= AddClonedItems;
+        }
+
+        private void OnItemsRegistered()
+        {
+            Logger.LogInfo("Terrarheimr items registered");
         }
     }
 }

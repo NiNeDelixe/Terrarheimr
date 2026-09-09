@@ -28,6 +28,9 @@
 	</PropertyGroup>
 
 	<ItemGroup>
+		<Reference Include="EquipmentAndQuickSlotsAPI">
+		  <HintPath>bin\Debug\net48\EquipmentAndQuickSlotsAPI.dll</HintPath>
+		</Reference>
 		<Reference Include="System" />
 		<Reference Include="System.Core" />
 		<Reference Include="System.Xml.Linq" />
@@ -44,7 +47,20 @@
 	</ItemGroup>
 
 	<ItemGroup>
+		<PackageReference Include="ILRepack" Version="2.0.48">
+		  <PrivateAssets>all</PrivateAssets>
+		  <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+		</PackageReference>
+		<PackageReference Include="ILRepack.Lib.MSBuild.Task" Version="2.0.46">
+		  <PrivateAssets>all</PrivateAssets>
+		  <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+		</PackageReference>
 		<PackageReference Include="JotunnLib" Version="2.26.0" />
+		<PackageReference Include="Mono.pdb2mdb" Version="0.1.0.20130128" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Folder Include="Features\Items\Weapons\Swords\" />
 	</ItemGroup>
 
 	<PropertyGroup>

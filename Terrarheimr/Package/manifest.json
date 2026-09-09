@@ -5,6 +5,7 @@
   "website_url": "",
   "dependencies": [
     "denikson-BepInExPack_Valheim-5.4.2202",
-    "ValheimModding-Jotunn-2.24.3"
+    "ValheimModding-Jotunn-2.24.3",
+    "EquipmentAndQuickSlots-3.0.2"
   ]
 }
